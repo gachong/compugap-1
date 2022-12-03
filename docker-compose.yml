@@ -1,0 +1,67 @@
+# Based on https://github.com/shipping-docker/vessel
+version: '3'
+services:
+
+  mariadb:
+    build: ./docker/mysql/
+    command: --default-authentication-plugin=mysql_native_password
+    hostname: dbmaria
+    expose:
+      - "33060"    
+    ports:
+      - "33060:3306"
+    networks:
+      - backend 
+    restart: on-failure   
+    environment:
+      MYSQL_DATABASE: compugap
+      MYSQL_USER: developer
+      MYSQL_PASSWORD: secret
+      MYSQL_ROOT_PASSWORD: secret
+
+  compugap:
+    build: ./docker/app/
+    networks:
+      - backend
+    ports:
+      - "8081:80"
+      - "8080:8080"
+    links:
+      - mariadb
+    depends_on:
+      - mariadb
+    env_file:
+      - ./.env.docker
+    volumes:
+      - .:/var/www/html
+      - ~/.composer/cache/files:/root/.composer/cache/files
+      - ~/.ssh:/root/.ssh
+
+  portainer:
+    image: portainer/portainer-ce:latest
+    container_name: portainer
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./portainer-data:/data
+    ports:
+      - "9000:9000"
+    networks:
+      - backend    
+    links:
+      - mariadb
+    depends_on:
+      - mariadb
+
+networks:
+  backend:
+    ipam:
+      config:
+        - subnet: 172.18.1.0/24
+
+
+
+            
