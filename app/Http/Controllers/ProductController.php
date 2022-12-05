@@ -10,6 +10,7 @@ use App\Models\Product;
 use Exception;
 use Illuminate\Support\Facades\Http;
 
+
 class ProductController extends Controller
 {
     
@@ -80,7 +81,7 @@ class ProductController extends Controller
             $response = Http::get($url);
             return response()->json([
                 'code' => 200,
-                'data' => $response,
+                'data' => $response->body(),
                 'message' => 'Conection OK'
             ]);
 
