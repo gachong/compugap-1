@@ -76,9 +76,7 @@ class ProductController extends Controller
     public function TestApi(){
 
         try{
-            $client = getenv('WOOCOMERCE_CLIENT_KEY');
-            $secret = getenv('WOOCOMERCE_CLIENT_SECRET_KEY');
-            $url = getenv('WOOCOMERCE_URl').'/wp-json/wc/v3/orders?consumer_key='.$client.'&consumer_secret='.$secret;
+            $url = 'https://compugap.es/wp-json/wc/v3/orders?consumer_key=ck_f4a40ffdb45d1c198979b486002751cdb1ac784a&consumer_secret=cs_b047bbc440fedf0ec6ab3960540b37713148ff64';
             $response = Http::get($url);
             return response()->json([
                 'code' => 200,
