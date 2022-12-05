@@ -13,7 +13,7 @@ Alternative installation is possible without local dependencies relying on [Dock
 
 ### Docker
 
-To install with [Docker](https://www.docker.com), run following commands:
+To install with [Docker](https://linuxconfig.org/how-to-install-docker-on-ubuntu-18-04-bionic-beaver), run following commands:
 
 ```
 git clone https://github.com/rexcacayo/compugap.git

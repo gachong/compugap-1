@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,3 +25,4 @@ Route::group(['middleware' => ['auth']], function () {
 });
 */
 
+Route::get('/testapi',[ProductController::class,'TestApi'])->name('test-api');

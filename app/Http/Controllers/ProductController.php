@@ -56,13 +56,48 @@ class ProductController extends Controller
             $client = getenv('WOOCOMERCE_CLIENT_KEY');
             $secret = getenv('WOOCOMERCE_CLIENT_SECRET_KEY');
             $response = Http::withBasicAuth($client, $secret)->get($url);
-            DD($response);
+            return response()->json([
+                'code' => 200,
+                'data' => $response,
+                'message' => 'Send Info'
+            ]);
 
         }catch(Exception $e){
             
-            DD($e->getMessage());
+            return response()->json([
+                'code' => 400,
+                'data' => $e->getMessage(),
+                'message' => 'Conection Fail'
+            ]);
         }
         
+    }
+
+    public function TestApi(){
+
+        try{
+            $client = getenv('WOOCOMERCE_CLIENT_KEY');
+            $secret = getenv('WOOCOMERCE_CLIENT_SECRET_KEY');
+            $url = getenv('WOOCOMERCE_URl').'/wp-json/wc/v3/orders?consumer_key='.$client.'&consumer_secret='.$secret;
+            $response = Http::withBasicAuth($client, $secret)->get($url);
+            return response()->json([
+                'code' => 200,
+                'data' => $response,
+                'message' => 'Conection OK'
+            ]);
+
+        }catch(Exception $e){
+
+            return response()->json([
+                'code' => 400,
+                'data' => $e->getMessage(),
+                'message' => 'Conection Fail'
+            ]);
+
+            
+            
+        }
+
     }
 
 
