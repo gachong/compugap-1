@@ -81,7 +81,7 @@ class ProductController extends Controller
             $response = Http::get($url);
             return response()->json([
                 'code' => 200,
-                'data' => $response->body(),
+                'data' => json_decode($response->body(),true),
                 'message' => 'Conection OK'
             ]);
 
