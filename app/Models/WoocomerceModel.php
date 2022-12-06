@@ -94,6 +94,7 @@ public function FoundCategorie($categoriestring){
 public function categoriesfromwoocomerce(){
     $cltWoocomerce = self::conectWoocomerce();
     $catFromWoocomerce = $cltWoocomerce->get('products/categories');
+    DD("qwe");
     DD($catFromWoocomerce);
 }
 

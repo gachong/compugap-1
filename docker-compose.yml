@@ -33,7 +33,7 @@ services:
     env_file:
       - ./.env.docker
     volumes:
-      - .:/var/www/html
+      - ./app:/var/www/html
       - ~/.composer/cache/files:/root/.composer/cache/files
       - ~/.ssh:/root/.ssh
 
