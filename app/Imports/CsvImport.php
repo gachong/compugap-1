@@ -2,11 +2,12 @@
 
 namespace App\Imports;
 
-use App\Models\Product;
+use App\Models\ProductMod;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use Maatwebsite\Excel\Concerns\WithCustomCsvSettings;
 
-class CsvImport implements ToModel
+class CsvImport implements ToModel, WithCustomCsvSettings
 {
     /**
     * @param array $row
@@ -15,7 +16,7 @@ class CsvImport implements ToModel
     */
     public function model(array $row)
     {
-        return new Product([
+        return new ProductMod([
             'codigo' => $row[0],
             'articule' => $row[1],
             'pricewithouttax' => $row[2],
@@ -29,5 +30,12 @@ class CsvImport implements ToModel
             'url_image' => $row[15]
        ]);
         
+    }
+
+    public function getCsvSettings(): array
+    {
+        return [
+            'input_encoding' => 'ISO-8859-1'
+        ];
     }
 }

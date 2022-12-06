@@ -3,6 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\WoocomerceProductController;
+use App\Http\Controllers\ReadCsvController;
+use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,9 +24,9 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-Route::get('/logout', [App\Http\Controllers\HomeController::class, 'perform'])->name('logout');
+Route::get('/logout', [HomeController::class, 'perform'])->name('logout');
 
 Route::get('/file-import',[ProductController::class,'importView'])->name('file-import');
 
@@ -31,6 +34,6 @@ Route::post('/import',[ProductController::class,'import'])->name('import');
 
 Route::get('/export-product',[ProductController::class,'exportProducts'])->name('export-product');
 
-Route::post('/uploadcsv', [App\Http\Controllers\ReadCsvController::class, 'storeFile'])->name('uploadcsv');
+Route::post('/uploadcsv', [ReadCsvController::class, 'storeFile'])->name('uploadcsv');
 
-Route::get('/send-info',[ProductController::class,'SendApi'])->name('send-info');
+Route::get('/send-info',[WoocomerceProductController::class,'SendApi'])->name('send-info');

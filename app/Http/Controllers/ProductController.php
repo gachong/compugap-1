@@ -6,9 +6,10 @@ use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\CsvImport;
 use App\Exports\ExportProduct;
-use App\Models\Product;
-use Exception;
-use Illuminate\Support\Facades\Http;
+use App\Models\ProductMod;
+
+
+
 
 
 class ProductController extends Controller
@@ -19,7 +20,7 @@ class ProductController extends Controller
     * @return \Illuminate\Support\Collection
     */
     public function importView(){
-        $products = Product::all();
+        $products = ProductMod::all();
         $imported = ([
             "file" => "OK"
         ]);
@@ -35,14 +36,14 @@ class ProductController extends Controller
  
     public function import(Request $request){
 
-        $products = new Product();
+        $products = new ProductMod();
         $products->UpdateDB();
         Excel::import(new CsvImport, $request->file('file')->store('files'));
         $imported = ([
             'file'=>'OK'
         ]);
         $products->EliminarCabecera();
-        $products = Product::all();
+        $products = ProductMod::all();
         return view('importFile')->with('products', $products)->with('imported',$imported);
         
     }
@@ -51,15 +52,14 @@ class ProductController extends Controller
         return Excel::download(new ExportProduct, 'users.xlsx');
     }
 
-    public function SendApi(){
+    /*public function SendApi(){
         try{
-            $url = getenv('WOOCOMERCE_URl').'/wp-json/wc/v3/data/';
-            $client = getenv('WOOCOMERCE_CLIENT_KEY');
-            $secret = getenv('WOOCOMERCE_CLIENT_SECRET_KEY');
-            $response = Http::withBasicAuth($client, $secret)->get($url);
+
+            self::CreateJsonProduct();
+
             return response()->json([
                 'code' => 200,
-                'data' => $response,
+                'data' => null,
                 'message' => 'Send Info'
             ]);
 
@@ -72,33 +72,15 @@ class ProductController extends Controller
             ]);
         }
         
-    }
+    }*/
 
-    public function TestApi(){
+   
 
-        try{
-            $url = 'https://compugap.es/wp-json/wc/v3/orders?consumer_key=ck_f4a40ffdb45d1c198979b486002751cdb1ac784a&consumer_secret=cs_b047bbc440fedf0ec6ab3960540b37713148ff64';
-            $response = Http::get($url);
-            return response()->json([
-                'code' => 200,
-                'data' => json_decode($response->body(),true),
-                'message' => 'Conection OK'
-            ]);
+    
+    
+    
 
-        }catch(Exception $e){
-
-            return response()->json([
-                'code' => 400,
-                'data' => $e->getMessage(),
-                'message' => 'Conection Fail'
-            ]);
-
-            
-            
-        }
-
-    }
-
+   
 
 
     

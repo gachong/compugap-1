@@ -5,11 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
-class Product extends Model
+class ProductMod extends Model
 {
     use HasFactory;
 
-    use HasFactory;
+    protected $table = 'products';
+
 
     /**
     * The attributes that are mass assignable.
